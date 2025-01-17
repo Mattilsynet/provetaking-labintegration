@@ -16,6 +16,30 @@ sequenceDiagram
     LAB-->>MT: Use token in query.
 ```
 
+## Normal operation
+
+```mermaid
+sequenceDiagram
+    participant LAB as Laboratory
+    participant MT as NFSA
+    alt Acquire all requisition
+        Note right of MT: Can be called several times, especially to catch updates of requisition.
+        LAB->>MT: GET /requisitions
+        MT->>LAB: All requisitions for lab
+    else Retrieve a specific requisiton.
+        LAB->>MT: GET /requisitions/1234
+        MT->>LAB: A single requisition.
+    end
+    LAB->>MT: POST /requisitions/1234/sample-received
+    Note right of MT: Called when sample bag has physically arrived at lab.
+    MT->>LAB: 200 OK
+    LAB->>MT: POST /requisitions/1234/analysis-started
+    Note right of MT: When the lab starts the analysis, this is called to signal to MT that it is no longer possible to update the requisition.
+    MT->>LAB: 200 OK
+    LAB->>MT: POST /requisitions/1234/results
+    Note right of MT: Result of analysis, can be calle multiple times if updates are needed.
+    MT->>LAB: 201 Created
+```
 
 
 ## Fetching requisitions for laboratory
@@ -39,111 +63,3 @@ curl -X 'GET' \
   -H 'Authorization: Bearer <TOKEN_FROM_MASKINPORTEN>'
 ```
 
-```json
-[
-  {
-    "id": 0,
-    "sampleId": "123456",
-    "sampleType": {
-      "id": 0,
-      "matrixId": 0,
-      "matrix": "Kidney",
-      "matrixCode": "A01YL",
-      "productId": 0,
-      "product": "Veal calves",
-      "productCode": "A0F1V",
-      "description": "string"
-    },
-    "substances": [
-      {
-        "id": 0,
-        "name": "A3F NSAIDS",
-        "code": "RF-00013520-PAR"
-      }
-    ],
-    "contractRef": "string",
-    "status": "string",
-    "metadata": "string",
-    "createdDate": "2025-01-14T11:45:14.315Z",
-    "subSamples": [
-      {
-        "id": 0,
-        "subSampleId": 0,
-        "payload": "string"
-      }
-    ],
-    "results": {
-      }
-  }
-]
-```
-
-<details>
-<summary>Extended example of returned requisition.</summary>
-```json
-[
-  {
-    "id": 0,
-    "sampleId": "123456",
-    "sampleType": {
-      "id": 0,
-      "matrixId": 0,
-      "matrix": "Kidney",
-      "matrixCode": "A01YL",
-      "productId": 0,
-      "product": "Veal calves",
-      "productCode": "A0F1V",
-      "description": "string"
-    },
-    "substances": [
-      {
-        "id": 0,
-        "name": "A3F NSAIDS",
-        "code": "RF-00013520-PAR"
-      }
-    ],
-    "contractRef": "string",
-    "status": "string",
-    "metadata": "string",
-    "createdDate": "2025-01-14T11:45:14.315Z",
-    "subSamples": [
-      {
-        "id": 0,
-        "subSampleId": 0,
-        "payload": "string"
-      }
-    ],
-    "results": {
-      "status": "UNDETERMINED",
-      "complete": true,
-      "subSamples": [
-        {
-          "subSampleId": 0,
-          "resultSets": [
-            {
-              "resultId": 0,
-              "resultLines": [
-                {
-                  "amount": 0,
-                  "belowThreshold": true,
-                  "detectableThreshold": 0,
-                  "unitOfMeasurement": "mg/kg",
-                  "method": "SOP-123",
-                  "name": "string",
-                  "efsaCode": "string",
-                  "suggestedInterpretation": "neg"
-                }
-              ],
-              "status": "UNDETERMINED",
-              "screening": true,
-              "fileName": "string",
-              "fileRef": "string"
-            }
-          ]
-        }
-      ]
-    }
-  }
-]
-```
-</details>
