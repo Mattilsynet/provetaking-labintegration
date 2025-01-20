@@ -7,9 +7,7 @@ Swagger documentation can be found [here](https://sample.sample-dev.mattilsynet.
 [Maskinporten](https://docs.digdir.no/docs/Maskinporten/maskinporten_overordnet) will be used for authentication between Norwegian Food Safety Authority (NFSA) and the laboratory.
 Maskinporten is a trusted third party, requires Norwegian organisation number.
 
-<script>
-  mermaid.initialize({ sequence: { showSequenceNumbers: true } });
-</script>
+
 
 
 ```mermaid
@@ -54,14 +52,8 @@ sequenceDiagram
     LAB->>MT: POST /requisitions/1234/analysis-completed
     MT-->>LAB: 200 OK
 ```
-
-
-## Examples
-
-```shell
-curl -X 'GET' \
-  'http://sample.sample-dev.mattilsynet.io/requisitions' \
-  -H 'accept: application/vnd.mattilsynet.proveta.lab+json' \
-  -H 'Authorization: Bearer <TOKEN_FROM_MASKINPORTEN>'
-```
-
+<details>
+<script>
+  mermaid.initialize({ sequence: { showSequenceNumbers: true } });
+</script>
+</details>
