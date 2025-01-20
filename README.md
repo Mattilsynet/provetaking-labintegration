@@ -53,6 +53,8 @@ sequenceDiagram
     MT-->>LAB: 200 OK
 ```
 <details>
+<summary>Mermaid config</summary>
+Code below is only for configuring the mermaid diagrams above.
 <script>
   mermaid.initialize({ sequence: { showSequenceNumbers: true } });
 </script>
