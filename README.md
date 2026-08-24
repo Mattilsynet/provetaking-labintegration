@@ -574,7 +574,7 @@ Errors use `application/problem+json`. A response can include:
 }
 ```
 
-Include `traceId` when contacting NFSA support.
+Include `traceId` and `requisitionId` when contacting NFSA support.
 
 | Status | Meaning | Action |
 | --- | --- | --- |
