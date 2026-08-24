@@ -161,10 +161,10 @@ GET /requisitions
 
 Supported filters:
 
-| Parameter | Meaning |
+| Parameter | Requisitions returned |
 | --- | --- |
-| `processed=false` | Requisitions not acknowledged since their latest NFSA update |
-| `processed=true` | Requisitions acknowledged since their latest NFSA update |
+| `processed=false` | Requisitions whose latest version has not yet been acknowledged by the laboratory using `POST /requisitions/{requisitionId}/processed`. This includes new requisitions and requisitions changed by NFSA after an earlier acknowledgement. |
+| `processed=true` | Requisitions whose latest version has already been acknowledged by the laboratory using `POST /requisitions/{requisitionId}/processed`. |
 | `sampleId` | Exact sample/bag identifier |
 | `updatedAfter` | Requisitions updated at or after an ISO 8601 timestamp |
 
