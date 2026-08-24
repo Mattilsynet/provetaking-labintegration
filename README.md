@@ -23,7 +23,7 @@ The Swagger page contains the wire-level request and response schemas. This guid
 - Development/sandbox: [Lab integration Swagger](https://sample.sample-dev.mattilsynet.io/swagger-ui/index.html?urls.primaryName=Endpoints+for+lab+integration)
 - Production: [Swagger](https://sample.sample.mattilsynet.io/swagger-ui/index.html)
 
-The lab API currently contains 13 operations. The complete list is in [Endpoint reference](#endpoint-reference).
+The complete list of operations is in [Endpoint reference](#endpoint-reference).
 
 ## Authentication
 
@@ -70,7 +70,7 @@ The requisition read API uses media-type versioning. Include this header when li
 Accept: application/vnd.mattilsynet.proveta.labv2+json
 ```
 
-Result submission accepts JSON and currently returns the V2 result representation under the following response media type:
+Result submission accepts JSON and returns the result representation under the following response media type:
 
 ```http
 Content-Type: application/json
@@ -114,7 +114,7 @@ sequenceDiagram
     LAB->>MT: POST /requisitions/{id}/analysis-started
     MT-->>LAB: 200
     LAB->>MT: POST /requisitions/{id}/results
-    MT-->>LAB: 200 Created results and completeness
+    MT-->>LAB: 200 Results and completeness
     opt Attach a file to a result
         LAB->>MT: POST /requisitions/{id}/results/{resultId}/attachments
         MT-->>LAB: 200 Signed PUT URL
@@ -297,7 +297,7 @@ Every sample has at least one entry in `subSamples`. Use its `subSampleId`, not 
 {
   "subSamples": [
     {
-      "subsampleid": 1,
+      "subSampleId": 1,
       "state": true,
       "reason": "Seal broken during transit"
     }
