@@ -527,13 +527,6 @@ The endpoint returns a temporary signed download URL:
 
 Use a normal unauthenticated `GET` against the signed URL. Do not send the Maskinporten token to file storage.
 
-### Delete an attachment
-
-```http
-DELETE /requisitions/{requisitionId}/results/{resultId}/attachments/{attachmentId}
-```
-
-Laboratories may delete an incorrectly uploaded attachment before initial analysis completion. A successful deletion returns `204 No Content`. Do not delete attachments after `analysis-completed`; upload a corrective attachment instead.
 
 ## Endpoint reference
 
@@ -551,7 +544,6 @@ All paths are relative to the environment base URL.
 | `POST` | `/requisitions/{requisitionId}/results/{resultId}/attachments` | `200` | Create a signed upload URL |
 | `GET` | `/requisitions/{requisitionId}/results/{resultId}/attachments` | `200` | List registered attachments |
 | `GET` | `/requisitions/{requisitionId}/results/{resultId}/attachments/{attachmentId}` | `200` | Retrieve attachment metadata |
-| `DELETE` | `/requisitions/{requisitionId}/results/{resultId}/attachments/{attachmentId}` | `204` | Delete an attachment before completion |
 | `GET` | `/requisitions/{requisitionId}/results/{resultId}/attachments/{attachmentId}/download` | `200` | Create a signed download URL |
 | `POST` | `/requisitions/{requisitionId}/analysis-completed` | `200` | Mark the initial analysis ready for NFSA processing |
 
