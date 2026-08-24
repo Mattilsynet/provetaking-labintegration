@@ -463,6 +463,18 @@ Content-Type: application/json
 
 `fileSize` is optional metadata. Use a plain file name without directory components, and use a unique name when uploading a replacement file to the same result.
 
+```bash
+curl --request POST \
+  "https://sample.sample-dev.mattilsynet.io/requisitions/123/results/4321/attachments" \
+  --header "Authorization: Bearer $TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "fileName": "analysis-report.pdf",
+    "mediaType": "application/pdf",
+    "fileSize": 245760
+  }'
+```
+
 The API returns `200 OK` with a signed URL valid until `expiration`:
 
 ```json
