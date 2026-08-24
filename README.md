@@ -265,9 +265,7 @@ The `status` returned on a requisition is the sample workflow status. Common lab
 | `SampleSent` | The sample has been sent to the laboratory |
 | `SampleReceived` | The laboratory has reported physical receipt |
 | `AnalysisStarted` | Analysis has started and NFSA changes are locked |
-| `ReadyToProcess` | The laboratory has completed the initial analysis |
 | `Compromised` | All subsamples are marked unfit for analysis |
-| `Completed` | NFSA has completed subsequent processing |
 | `Closed` | Processing and archival handling are closed |
 
 Other event values may be present. Do not infer processing acknowledgement from `status`; use the `processed` field.
