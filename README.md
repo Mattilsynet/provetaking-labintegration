@@ -313,7 +313,7 @@ Set `state` to `false` to reverse an erroneous compromise report and provide a r
 POST /requisitions/{requisitionId}/analysis-started
 ```
 
-This operation has no request or response body and returns `200 OK`. After this call, NFSA can no longer change the requisition.
+This operation has no request or response body and returns `200 OK`. After this call, NFSA can no longer change the requisition. To ensure that the laboratory has the latest version of the requisition, retrieve it again after calling `analysis-started`. If an NFSA inspector attempts to change the requisition afterward, the API will return an error, and the changes must be resolved out of band.
 
 ```bash
 curl --request POST \
