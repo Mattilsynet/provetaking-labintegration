@@ -547,16 +547,16 @@ The endpoints do more than report information. They also change the requisition 
 
 | Endpoint | Effect | Lab responsibility |
 | --- | --- | --- |
-| `GET /requisitions` | Returns requisitions assigned to the laboratory, optionally filtered by processing state | Store and validate each requisition before acknowledging it |
-| `GET /requisitions/{requisitionId}` | Returns the current requisition version and an `ETag` | Refresh local data when needed and use the latest version for subsequent calls |
-| `POST /requisitions/{requisitionId}/processed` | Acknowledges the current requisition version, including when processing failed | Call only after storing and validating the requisition; persist failures and their reasons |
-| `POST /requisitions/{requisitionId}/sample-received` | Records that the physical sample has arrived at the laboratory | Call after physical receipt; this does not mean that analysis has started |
-| `POST /requisitions/{requisitionId}/sample-compromised` | Marks or unmarks subsamples as compromised; if all subsamples are compromised, the sample becomes `Compromised` | Send the `subSampleId`, state, and reason; correct an erroneous report with `state: false` |
-| `POST /requisitions/{requisitionId}/analysis-started` | Changes the status to `AnalysisStarted`; NFSA can no longer modify the requisition | Call before submitting results, then retrieve the requisition again immediately to ensure the laboratory has the latest version |
-| `POST /requisitions/{requisitionId}/results` | Appends result records and updates the completion counters | Use only substance codes and subsample IDs supplied in the requisition; do not blindly retry |
-| `POST /requisitions/{requisitionId}/results/{resultId}/attachments` | Creates a temporary signed upload URL; attachment registration happens asynchronously | Upload the file to storage, then poll the attachment list |
-| `GET /requisitions/{requisitionId}/results/{resultId}/attachments`| Returns attachments that have been registered by the API | Confirm that expected files appear before completing the analysis |
-| `POST /requisitions/{requisitionId}/analysis-completed` | Changes the status to `ReadyToProcess` for NFSA handling | Call only when `pendingSubstanceCodes` is empty and all initial attachments are registered |
+| `GET /requisitions` | Returns requisitions assigned to the laboratory, optionally filtered by processing state | Store and validate each requisition before acknowledging it. |
+| `GET /requisitions/{requisitionId}` | Returns the current requisition version and an `ETag` | Refresh local data when needed and use the latest version for subsequent calls. |
+| `POST /requisitions/{requisitionId}/processed` | Acknowledges the current requisition version. | Call only after storing and validating the requisition. |
+| `POST /requisitions/{requisitionId}/sample-received` | Records that the physical sample has arrived at the laboratory | Call after physical receipt; this does not mean that analysis has started. |
+| `POST /requisitions/{requisitionId}/sample-compromised` | Marks or unmarks subsamples as compromised. If all subsamples are compromised, the sample becomes `Compromised` | Send the `subSampleId`, state, and reason. |
+| `POST /requisitions/{requisitionId}/analysis-started` | Changes the status to `AnalysisStarted`; NFSA inspectors can no longer modify the requisition. | Retrieve the requisition again immediately to ensure the laboratory has the latest version. |
+| `POST /requisitions/{requisitionId}/results` | Appends result records and updates the completion counters | Use only substance codes and subsample IDs supplied in the requisition. |
+| `POST /requisitions/{requisitionId}/results/{resultId}/attachments` | Creates a temporary signed upload URL; attachment registration happens asynchronously | Upload the file to storage, then poll the attachment list. |
+| `GET /requisitions/{requisitionId}/results/{resultId}/attachments`| Returns attachments that have been registered by the API | Confirm that expected files appear before completing the analysis. |
+| `POST /requisitions/{requisitionId}/analysis-completed` | Changes the status to `ReadyToProcess` and signals to NFSA inspector to start processing the results. | Call when lab has concluded the requisition and no more work is expected to be done, and all attachments are registered. |
 
 If NFSA attempts to modify a requisition after `analysis-started`, the API returns an error. The laboratory and NFSA must resolve such changes out of band.
 
