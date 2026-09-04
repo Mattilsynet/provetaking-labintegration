@@ -555,7 +555,7 @@ The endpoints do more than report information. They also change the requisition 
 | `POST /requisitions/{requisitionId}/analysis-started` | Changes the status to `AnalysisStarted`; NFSA can no longer modify the requisition | Call before submitting results, then retrieve the requisition again immediately to ensure the laboratory has the latest version |
 | `POST /requisitions/{requisitionId}/results` | Appends result records and updates the completion counters | Use only substance codes and subsample IDs supplied in the requisition; do not blindly retry |
 | `POST /requisitions/{requisitionId}/results/{resultId}/attachments` | Creates a temporary signed upload URL; attachment registration happens asynchronously | Upload the file to storage, then poll the attachment list |
-| `GET /requisitions/{requisitionId}/results/{resultId}/attachments` | Returns attachments that have been registered by the API | Confirm that expected files appear before completing the analysis |
+| `GET /requisitions/{requisitionId}/results/{resultId}/attachments`| Returns attachments that have been registered by the API | Confirm that expected files appear before completing the analysis |
 | `POST /requisitions/{requisitionId}/analysis-completed` | Changes the status to `ReadyToProcess` for NFSA handling | Call only when `pendingSubstanceCodes` is empty and all initial attachments are registered |
 
 If NFSA attempts to modify a requisition after `analysis-started`, the API returns an error. The laboratory and NFSA must resolve such changes out of band.
